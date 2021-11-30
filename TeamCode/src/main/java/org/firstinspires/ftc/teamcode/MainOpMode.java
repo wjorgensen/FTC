@@ -16,7 +16,7 @@ public class MainOpMode extends LinearOpMode {
     private DcMotor motor3;
     private DcMotor motor4;
     private DcMotor rightTableMotor;
-    private DcMotor leftTableMotor
+    private DcMotor leftTableMotor;
 
 
     @Override
@@ -45,10 +45,11 @@ public class MainOpMode extends LinearOpMode {
             power = -this.gamepad1.right_stick_y;
             sideways = -this.gamepad1.right_stick_x;
 
-
             tablePower = this.gamepad1.right_bumper;
             reverseTablePower = this.gamepad1.left_bumper;
             slowDown = this.gamepad1.a;
+
+             double duckSpinPower = 0.75;
            
 
             if(power>0.05) {
@@ -64,16 +65,28 @@ public class MainOpMode extends LinearOpMode {
                 motor4.setPower(power/2);
             }
             if(sideways > 0.05) {
-                motor1.setPower(-leftPower);
-                motor2.setPower(-leftPower);
-                motor3.setPower(rightPower);
-                motor4.setPower(-rightPower);
+                motor1.setPower(-power);
+                motor2.setPower(-power);
+                motor3.setPower(power);
+                motor4.setPower(-power);
             }
             if(sideways < -0.05) {
-                motor1.setPower(leftPower);
-                motor2.setPower(leftPower);
-                motor3.setPower(-rightPower);
-                motor4.setPower(rightPower);
+                motor1.setPower(power);
+                motor2.setPower(power);
+                motor3.setPower(-power);
+                motor4.setPower(power);
+            }
+            if(tablePower){
+                leftTableMotor.setPower(duckSpinPower);
+                rightTableMotor.setPower(duckSpinPower);
+            }
+            if(reverseTablePower){
+                leftTableMotor.setPower(-duckSpinPower);
+                rightTableMotor.setPower(-duckSpinPower);
+            }
+            if(!reverseTablePower && !tablePower){
+                leftTableMotor.setPower(0);
+                rightTableMotor.setPower(0);
             }
 
             
