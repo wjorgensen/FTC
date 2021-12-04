@@ -59,11 +59,11 @@ public class MainOpMode extends LinearOpMode {
 
 
             if(tablePower){
-                leftTableMotor.setPower(duckSpinPower);
+                leftTableMotor.setPower(0.5);
                 rightTableMotor.setPower(-duckSpinPower);
             }
             if(reverseTablePower){
-                leftTableMotor.setPower(-duckSpinPower);
+                leftTableMotor.setPower(-0.5);
                 rightTableMotor.setPower(duckSpinPower);
             }
             if(!reverseTablePower && !tablePower){
