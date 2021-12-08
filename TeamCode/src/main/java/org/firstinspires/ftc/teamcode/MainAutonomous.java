@@ -13,10 +13,6 @@ public class MainAutonomous extends LinearOpMode {
     private DcMotor motor3;
     private DcMotor motor4;
     private DcMotor tableMotor;
-    private Servo arm1;
-    private Servo arm2;
-    private DcMotor slider;
-
     @Override
     public void runOpMode() throws InterruptedException {
         motor1 = hardwareMap.get(DcMotor.class, "motor1");
@@ -24,26 +20,52 @@ public class MainAutonomous extends LinearOpMode {
         motor3 = hardwareMap.get(DcMotor.class, "motor3");
         motor4 = hardwareMap.get(DcMotor.class, "motor4");
         tableMotor = hardwareMap.get(DcMotor.class, "motorT");
-        arm1 = hardwareMap.get(Servo.class, "arm1");
-        arm2 = hardwareMap.get(Servo.class, "arm2");
-        slider = hardwareMap.get(DcMotor.class, "slider");
 
         waitForStart();
 
         //sleep(23000);
-        motor1.setPower(forward(1));
-        motor2.setPower(forward(2));
-        motor3.setPower(forward(3));
-        motor4.setPower(forward(4));
+        moveForward();
         distance(5);
-        motor1.setPower(0);
-        motor2.setPower(0);
-        motor3.setPower(0);
-        motor4.setPower(0);
+        stopMotors();
         //turnRight();
         sleep(500);
 
 
+    }
+    public void stopMotors(){
+        motor1.setPower(0);
+        motor2.setPower(0);
+        motor3.setPower(0);
+        motor4.setPower(0);
+    }
+    public void moveForward(){
+        motor1.setPower(forward(1));
+        motor2.setPower(forward(2));
+        motor3.setPower(forward(3));
+        motor4.setPower(forward(4));
+    }
+
+    public void moveBackward(){
+        motor1.setPower(backward(1));
+        motor2.setPower(backward(2));
+        motor3.setPower(backward(3));
+        motor4.setPower(backward(4));
+    }
+    public void turnRight(){
+        motor1.setPower(backward(1));
+        motor2.setPower(backward(2));
+        motor3.setPower(forward(3));
+        motor4.setPower(forward(4));
+    }
+    public void turnLeft(){
+        motor1.setPower(forward(1));
+        motor2.setPower(forward(2));
+        motor3.setPower(backward(3));
+        motor4.setPower(backward(4));
+    }
+    public void distance(double feet){
+        double constant = 7.5/1000;
+        sleep((long) (feet/constant));
     }
 
     public int forward(int motor) {
@@ -73,23 +95,6 @@ public class MainAutonomous extends LinearOpMode {
             default:
                 return 0;
         }
-    }
-    public void turnRight(){
-        motor1.setPower(backward(1));
-        motor2.setPower(backward(2));
-        motor3.setPower(forward(3));
-        motor4.setPower(forward(4));
-    }
-    public void turnLeft(){
-        motor1.setPower(forward(1));
-        motor2.setPower(forward(2));
-        motor3.setPower(backward(3));
-        motor4.setPower(backward(4));
-    }
-
-    public void distance(double feet){
-        double constant = 7.5/1000;
-        sleep((long) (feet/constant));
     }
 }
 
